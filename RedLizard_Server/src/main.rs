@@ -14,15 +14,10 @@ fn handle_client(mut stream: SslStream<TcpStream>) {
         let mut input = String::new();
         io::stdin().read_line(&mut input);
         let buf = input.split_whitespace().collect::<Vec<_>>();
-        if buf[0] == "tunnel" {
-            println!("[+] Tunnel is being created...");
-        }
-        else if buf[0]=="help" {
+        if buf[0]=="help" {
             println!("Commands:
             IPS - IP of your SSH Server
             PORTS - Port of your SSH Server
-            username - username of your SSH Server
-            password - password of your SSH Server
             continue;
         };
         stream.write(&mut input.as_bytes()).unwrap();
