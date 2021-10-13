@@ -5,7 +5,6 @@ print("[+] RedLizard C2 Payload Generator.\n")
 
 ip=input("Set IP for C2: ")
 port=input("Set Port for C2: ")
-formattype=input("Choose Payload format (exe,raw): ")
 a,b,c,d = ip.split('.')
 templatefile = "RedLizard_Client.exe"
 template=open(templatefile,'rb')
