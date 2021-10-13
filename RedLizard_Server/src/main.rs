@@ -1,3 +1,5 @@
+extern crate colored;
+use colored::Colorize;
 use std::io;
 use std::env;
 use std::io::{Read, Write};
@@ -14,12 +16,6 @@ fn handle_client(mut stream: SslStream<TcpStream>) {
         let mut input = String::new();
         io::stdin().read_line(&mut input);
         let buf = input.split_whitespace().collect::<Vec<_>>();
-        if buf[0]=="help" {
-            println!("Commands:
-            IPS - IP of your SSH Server
-            PORTS - Port of your SSH Server
-            continue;
-        };
         stream.write(&mut input.as_bytes()).unwrap();
         let mut data = [0 as u8; 10024];
         stream.read(&mut data);
@@ -40,7 +36,8 @@ fn main() {
     acceptor.check_private_key().unwrap();
     let acceptor = Arc::new(acceptor.build());
     let listener2 = TcpListener::bind(&complete).unwrap();
-    println!(r#"/ / / / / / / / / | | / / / / / / __  / / / / / / / / | | / / / / / / / / /
+    println!("{}", r" \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
+/ / / / / / / / / | | / / / / / / __  / / / / / / / / | | / / / / / / / / /
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \   /..\  ` ` \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
 ------------------' `---------- (    ) \|/ -----------' `------------------
  ,------------------------- _\___>  <__//` ------------------------------. 
@@ -57,7 +54,7 @@ fn main() {
 / / / / / / / / / | | / / / / / / / / / |:| / / / / / | | / / / / / / / / /
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \  |:/  \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
 / / / / / / / / / | | / /  --.________,-_/  / / / / / | | / / / / / / / / /
- \ \ \ \ \ \ \ \ \| |\ \ \ \ \ ```-----' \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ "#);
+ \ \ \ \ \ \ \ \ \| |\ \ \ \ \ ```-----' \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ ".red());
     println!("\n[+] Welcome to RedLizard C2 \n");
     // accept connections and process them, spawning a new thread for each one
     println!("[+] Server listening on port {}",&port);
@@ -79,4 +76,3 @@ fn main() {
         }
     }
 }
-
