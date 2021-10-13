@@ -21,13 +21,13 @@ The python script will take the client after being compiled and will replace wit
 If this will fail, you can always use the code to manually alter the IP and port as shown in my [OffensiveRust](https://github.com/trickster0/OffensiveRust) repo.  
 
 For the client, just run it on the victim, for the Server you will need to create a crt and a key file for the SSL and have it in the current directory.  
-`openssl genrsa -out ca.key 2048
-openssl req -new -x509 -days 3500 -key ca.key -out ca.crt
-openssl genrsa -out server.key 2048
-openssl req -new -key server.key -out server.csr
-openssl x509 -req -days 3500 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
-openssl pkcs12 -export -out server.p12 -inkey server.key -in server.crt -chain -CAfile ca.crt
-rm server.p12 server.csr ca.key`  
+`openssl genrsa -out ca.key 2048`  
+`openssl req -new -x509 -days 3500 -key ca.key -out ca.crt`  
+`openssl genrsa -out server.key 2048`  
+`openssl req -new -key server.key -out server.csr`  
+`openssl x509 -req -days 3500 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt`  
+`openssl pkcs12 -export -out server.p12 -inkey server.key -in server.crt -chain -CAfile ca.crt`  
+`rm server.p12 server.csr ca.key`  
 
 For the server just supply as parameter the port you want to run it at.
 
