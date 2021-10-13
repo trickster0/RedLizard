@@ -31,4 +31,5 @@ For the client, just run it on the victim, for the Server you will need to creat
 
 For the server just supply as parameter the port you want to run it at.
 
-Dependencies for this project requires you to install OpenSSL and ActivePerl.
+Dependencies for this project to install, OpenSSL and ActivePerl.  
+RedLizard is not made handling many cases, so either be gentle handle them.  
