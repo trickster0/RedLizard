@@ -9,7 +9,7 @@ Binary can get a bit big around 3~3.5mb since it needs to statically compile the
 Try it against strong EDRs, you will surprised :D  
 
 <p align="center">
-    <img src="https://github.com/trickster0/RedLizard/raw/master/redlizard.png">
+    <img src="https://github.com/trickster0/RedLizard/raw/main/redlizard.png">
 </p>  
 
 For coming this project you need to compile from the directory of each project with the below command:    
