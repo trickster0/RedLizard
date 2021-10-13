@@ -3,7 +3,10 @@ RedLizard Rust TCP Reverse Shell Server/Client
 
 This is a reverse shell in Rust called RedLizard, basically it is just a cmd.exe executing commands.
 This uses SSL encryption and some basic reversing on strings.
-Binary can get a bit big around 3~3.5mb since it needs to statically compile the OpenSSL library.
+Binary can get a bit big around 3~3.5mb since it needs to statically compile the OpenSSL library.  
+  
+Try it against strong EDRs, you will surprised :D  
+
 For coming this project you need to compile from the directory of each project with the below command:    
  
 `cargo build --release`  
