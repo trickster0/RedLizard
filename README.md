@@ -18,7 +18,7 @@ To statically create the binary, you need to execute those commands in CMD befor
 `set RUSTFLAGS=-C target-feature=+crt-static`  
 
 The python script will take the client after being compiled and will replace with the IP and PORT of your choice inside the binary.  
-If this will fail, you can always use the code to manually alter the IP and port as shown in my [OffensiveRust](https://github.com/trickster0/OffensiveRust) repo.  
+If this will fail, you can always use the code to manually alter the IP and port as shown in my [OffensiveRust](https://github.com/trickster0/OffensiveRust/blob/master/tcp_ssl_client/src/main.rs) repo.  
 
 For the client, just run it on the victim, for the Server you will need to create a crt and a key file for the SSL and have it in the current directory.  
 `openssl genrsa -out ca.key 2048`  
