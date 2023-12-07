@@ -23,9 +23,7 @@ fn main() {
         "127.0.0.1:4443".to_owned()
     }.to_string();
 
-    
-
-	let sockettest: SocketAddr = server_details.parse().unwrap();
+    let sockettest: SocketAddr = server_details.parse().unwrap();
 	
     let convertsocket = sockettest.to_string();
 	let convertip = sockettest.ip().to_string();
