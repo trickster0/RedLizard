@@ -1,40 +1,26 @@
-# RedLizard - A Rust TCP Reverse Shell with SSL
+# RedLizard NG
+### Forked from: https://github.com/trickster0/RedLizard
 
-RedLizard Rust TCP Reverse Shell Server/Client
 
-This is a reverse shell in Rust called RedLizard, basically it is just a cmd.exe executing commands.
-This uses SSL encryption and some basic reversing on strings.
-Binary can get a bit big around 3~3.5mb since it needs to statically compile the OpenSSL library.  
-  
-Try it against strong EDRs, you will surprised :D  
+#### Changes from the original project:
 
-<p align="center">
-    <img src="https://github.com/trickster0/RedLizard/raw/main/redlizard.png">
-</p>  
+- Use native_tls instead of openssl, since openssl on windows it's a pain
 
-For coming this project you need to compile from the directory of each project with the below command:    
+- Client and server run both on windows and linux
+
+- Client on linux execute command through bash
+
+- The certificate (and the private key) is now embedded into the server as PFX file
+
+- The client accept the server IP and port as parameter
+
+- Adjusted the code to suppress warning
+
  
-`cargo build --release`  
 
-The server can be cross compiled for Linux or Windows but the client would be better to be compiled in Windows host.  
-To statically create the binary, you need to execute those commands in CMD before the previously mentioned command to compile:  
+#### Requirements:
 
-`"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"`  
-`set RUSTFLAGS=-C target-feature=+crt-static`  
+- rustc & cargo 1.73.0
 
-The python script will take the client after being compiled and will replace with the IP and PORT of your choice inside the binary.  
-If this will fail, you can always use the code to manually alter the IP and port as shown in my [OffensiveRust](https://github.com/trickster0/OffensiveRust/blob/master/tcp_ssl_client/src/main.rs) repo.  
+- on linux: OpenSSL 3.0.11 with libssl-dev
 
-For the client, just run it on the victim, for the Server you will need to create a crt and a key file for the SSL and have it in the current directory.  
-`openssl genrsa -out ca.key 2048`  
-`openssl req -new -x509 -days 3500 -key ca.key -out ca.crt`  
-`openssl genrsa -out server.key 2048`  
-`openssl req -new -key server.key -out server.csr`  
-`openssl x509 -req -days 3500 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt`  
-`openssl pkcs12 -export -out server.p12 -inkey server.key -in server.crt -chain -CAfile ca.crt`  
-`rm server.p12 server.csr ca.key`  
-
-For the server just supply as parameter the port you want to run it at.
-
-Dependencies for this project to install, OpenSSL and ActivePerl.  
-RedLizard is not made handling many cases, so either be gentle handle them.  
