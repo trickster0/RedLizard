@@ -71,7 +71,7 @@ fn main() {
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \  |:/  \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
 / / / / / / / / / | | / /  --.________,-_/  / / / / / | | / / / / / / / / /
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \ ```-----' \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ ".red());
-    println!("\n[+] Welcome to RedLizard - trickster0 && zinzloun \n");
+    println!("\n[+] Welcome to RedLizard NG - trickster0 && zinzloun \n");
     // accept connections and process them, spawning a new thread for each one
     println!("[+] Server listening on port {}",&port);
     for stream2 in listener.incoming() {
