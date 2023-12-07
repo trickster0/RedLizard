@@ -37,8 +37,9 @@ fn main() {
 
     // read the password as first passed arg
     let passwd = &args[1];
-    //*Certificate confilet key = "zinz.key";guration_________________________
+    //*Certificate configuration: the file must be present inside src folder
     let cert_b = include_bytes!("zinz.pfx");
+	//***********************************************************************
     //parse the certificate as byte array
     let identity = Identity::from_pkcs12(cert_b, passwd).unwrap();
     // read the port as second passed arg   
@@ -70,7 +71,7 @@ fn main() {
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \  |:/  \ \ \ \ \| |\ \ \ \ \ \ \ \ \ 
 / / / / / / / / / | | / /  --.________,-_/  / / / / / | | / / / / / / / / /
  \ \ \ \ \ \ \ \ \| |\ \ \ \ \ ```-----' \ \ \ \ \ \ \| |\ \ \ \ \ \ \ \ \ ".red());
-    println!("\n[+] Welcome to RedLizard - trickster0 \n");
+    println!("\n[+] Welcome to RedLizard - trickster0 && zinzloun \n");
     // accept connections and process them, spawning a new thread for each one
     println!("[+] Server listening on port {}",&port);
     for stream2 in listener.incoming() {
