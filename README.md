@@ -16,7 +16,7 @@
 - on linux: OpenSSL 3.0.11 with libssl-dev installed
 - pfx file must reside on src folder of the server
 #### Advises
-- Generate certificate using OpenSSL: https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs
+- [Generate certificate using OpenSSL](https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs)
 - better run server on linux
 
 #### Run the server
